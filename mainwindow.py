@@ -14,16 +14,16 @@ class mainwindow:
         self._jpgSelected = None
 
         self._top = Tkinter.Tk()
-        self._top.geometry("390x100")
+        self._top.geometry("490x100")
 
         #campos de texto
         self._frmCampos = Tkinter.Frame(self._top)
         self._frmCampos.pack(side=Tkinter.TOP)
         self._lblDir = Tkinter.Label(self._frmCampos,text="Carpeta: ")
-        self._txtDir = Tkinter.Text(self._frmCampos, height=1, width=30)
+        self._txtDir = Tkinter.Text(self._frmCampos, height=1, width=45)
         self._btnDir = Tkinter.Button(self._frmCampos, text="...", command = self.selectDir)
         self._lblJpg = Tkinter.Label(self._frmCampos,text="Imagen: ")
-        self._txtJpg = Tkinter.Text(self._frmCampos, height=1, width=30)
+        self._txtJpg = Tkinter.Text(self._frmCampos, height=1, width=45)
         self._btnJpg = Tkinter.Button(self._frmCampos, text="...", command = self.selectJpg)
         self._lblDir.grid(column=0, row = 1)
         self._txtDir.grid(column=1, row = 1)
@@ -47,7 +47,9 @@ class mainwindow:
         if self._dirSelected:
             print(self._dirSelected)
             fotos = self.getJpgsInDir(self._dirSelected)
+            #print(fotos)
             for f in fotos:
+                print(f)
                 jpgren = jpgrenamer(f)
                 jpgren.normalizeJpgName()
         elif self._jpgSelected:
@@ -78,6 +80,7 @@ class mainwindow:
             print("Nada seleccionado")
 
     def getJpgsInDir(self, direc):
+        os.chdir(direc) #Reading a nonworking dir get name error
         ficheros = [os.path.abspath(x) for x in os.listdir(direc)]
         fotos = []
         for f in ficheros:
