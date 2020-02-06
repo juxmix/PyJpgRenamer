@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: latin-1 -*-
 '''
 Created on 7 de febr. 2019
 
@@ -21,7 +23,7 @@ class mainwindow:
 
         #campos de texto
         self._frmCampos = Tkinter.Frame(self._top)
-        self._frmCampojuxmixs.pack(side=Tkinter.TOP)
+        self._frmCampos.pack(side=Tkinter.TOP)
         self._lblDir = Tkinter.Label(self._frmCampos,text="Carpeta: ")
         self._txtDir = Tkinter.Text(self._frmCampos, height=1, width=45)
         self._btnDir = Tkinter.Button(self._frmCampos, text="...", command = self.selectDir)
