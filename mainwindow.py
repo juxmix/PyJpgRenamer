@@ -1,11 +1,14 @@
 '''
 Created on 7 de febr. 2019
 
-@author: juxmix
+@author: Juanma Sánchez
 '''
 import Tkinter, tkFileDialog
+import logging
 from jpgrenamer import jpgrenamer
 import os
+
+logging.basicConfig(level=logging.INFO)
 
 class mainwindow:
 
@@ -18,7 +21,7 @@ class mainwindow:
 
         #campos de texto
         self._frmCampos = Tkinter.Frame(self._top)
-        self._frmCampos.pack(side=Tkinter.TOP)
+        self._frmCampojuxmixs.pack(side=Tkinter.TOP)
         self._lblDir = Tkinter.Label(self._frmCampos,text="Carpeta: ")
         self._txtDir = Tkinter.Text(self._frmCampos, height=1, width=45)
         self._btnDir = Tkinter.Button(self._frmCampos, text="...", command = self.selectDir)
@@ -45,39 +48,36 @@ class mainwindow:
 
     def normaliza(self):
         if self._dirSelected:
-            print(self._dirSelected)
+            logging.info("DIR: "+self._dirSelected)
             fotos = self.getJpgsInDir(self._dirSelected)
-            #print(fotos)
             for f in fotos:
-                print(f)
+                #print(f)
                 jpgren = jpgrenamer(f)
                 jpgren.normalizeJpgName()
         elif self._jpgSelected:
-            #print(self._jpgSelected)
             jpgimg = jpgrenamer(self._jpgSelected)
             self._jpgSelected = jpgimg.normalizeJpgName()
             self._txtJpg.delete(1.0, "end")
             self._txtJpg.insert("end", self._jpgSelected)
-            print(self._jpgSelected)
+            #print(self._jpgSelected)
         else:
-            print("Nada seleccionado")
+            logging.warning("Nada seleccionado")
 
     def desNormaliza(self):
         if self._dirSelected:
-            print(self._dirSelected)
+            logging.info("Unnormalize Dir: " + self._dirSelected)
             fotos = self.getJpgsInDir(self._dirSelected)
             for f in fotos:
                 jpgren = jpgrenamer(f)
                 jpgren.unNormalizeJpgName()
         elif self._jpgSelected:
-            #print(self._jpgSelected)
             jpgimg = jpgrenamer(self._jpgSelected)
             self._jpgSelected = jpgimg.unNormalizeJpgName()
             self._txtJpg.delete(1.0, "end")
             self._txtJpg.insert("end", self._jpgSelected)
-            print(self._jpgSelected)
+            #print(self._jpgSelected)
         else:
-            print("Nada seleccionado")
+            logging.warning("Nada seleccionado")
 
     def getJpgsInDir(self, direc):
         os.chdir(direc) #Reading a nonworking dir get name error
@@ -91,7 +91,7 @@ class mainwindow:
     def selectDir(self):
         #self._top.withdraw()
         self._dirSelected = tkFileDialog.askdirectory()
-        print("DIR: " + self._dirSelected)
+        logging.debug("DIR: " + self._dirSelected)
         self._txtDir.focus_set()
         self._txtDir.delete(1.0, "end")
         self._txtDir.insert("end", self._dirSelected)
@@ -100,7 +100,7 @@ class mainwindow:
 
     def selectJpg(self):
         self._jpgSelected = tkFileDialog.askopenfilename()
-        print("JPG: " + self._jpgSelected)
+        logging.debug("JPG: " + self._jpgSelected)
         self._txtJpg.focus_set()
         self._txtJpg.delete(1.0, "end")
         self._txtJpg.insert("end", self._jpgSelected)
