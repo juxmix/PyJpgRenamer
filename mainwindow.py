@@ -23,6 +23,7 @@ class mainwindow:
 
         #campos de texto
         self._frmCampos = Tkinter.Frame(self._top)
+        self._frmCampos.winfo_toplevel().title("jpg Renamer")
         self._frmCampos.pack(side=Tkinter.TOP)
         self._lblDir = Tkinter.Label(self._frmCampos,text="Carpeta: ")
         self._txtDir = Tkinter.Text(self._frmCampos, height=1, width=45)
@@ -41,10 +42,12 @@ class mainwindow:
         self._frmBotones.pack(side=Tkinter.BOTTOM)
         self._btnNormaliza = Tkinter.Button(self._frmBotones, text ="Normaliza", command = self.normaliza)
         self._btnDesNormaliza = Tkinter.Button(self._frmBotones, text ="DesNormaliza", command = self.desNormaliza)
+        self._btnEnDirs = Tkinter.Button(self._frmBotones, text ="EnCarpetas", command = self.enCarpetas)
         self._btnSalir = Tkinter.Button(self._frmBotones, text ="Salir", command = quit)
         self._btnNormaliza.grid(column=0, row = 1)
         self._btnDesNormaliza.grid(column=1, row = 1)
         self._btnSalir.grid(column=2, row = 1)
+        self._btnEnDirs.grid(column=3,row = 1)
         #go
         self._top.mainloop()
 
@@ -80,6 +83,20 @@ class mainwindow:
             #print(self._jpgSelected)
         else:
             logging.warning("Nada seleccionado")
+
+    def enCarpetas(self):
+        if self._dirSelected:
+            logging.info("Subcarpeta en: " + self._dirSelected)
+            fotos = self.getJpgsInDir(self._dirSelected)
+            dirs=set()
+            numFotos = 0;
+            for f in fotos:
+                jpgren=jpgrenamer(f)
+                dirs.add(jpgren.getSubFolderName())
+                jpgren.toSubFolder()
+                #logging.info(jpgren.getFileSinPath()+" -> DIR: "+jpgren.getSubFolderName())
+                numFotos += 1
+            logging.info("Moved ("+str(numFotos)+") in ("+str(len(dirs))+") folders")
 
     def getJpgsInDir(self, direc):
         os.chdir(direc) #Reading a nonworking dir get name error
