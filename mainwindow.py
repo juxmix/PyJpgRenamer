@@ -97,6 +97,11 @@ class mainwindow:
                 #logging.info(jpgren.getFileSinPath()+" -> DIR: "+jpgren.getSubFolderName())
                 numFotos += 1
             logging.info("Moved ("+str(numFotos)+") in ("+str(len(dirs))+") folders")
+        elif self._jpgSelected:
+            jpgren = jpgrenamer(self._jpgSelected)
+            jpgren.toSubFolder()
+        else:
+            logging.warning("Nada seleccionado")
 
     def getJpgsInDir(self, direc):
         os.chdir(direc) #Reading a nonworking dir get name error
