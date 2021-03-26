@@ -1,11 +1,12 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: latin-1 -*-
 '''
 Created on 7 de febr. 2019
 
 @author: Juanma Sánchez
 '''
-import Tkinter, tkFileDialog
+import tkinter
+from tkinter import filedialog
 import logging
 from jpgrenamer import jpgrenamer
 import os
@@ -18,19 +19,19 @@ class mainwindow:
         self._dirSelected = None
         self._jpgSelected = None
 
-        self._top = Tkinter.Tk()
+        self._top = tkinter.Tk()
         self._top.geometry("490x100")
 
         #campos de texto
-        self._frmCampos = Tkinter.Frame(self._top)
+        self._frmCampos = tkinter.Frame(self._top)
         self._frmCampos.winfo_toplevel().title("jpg Renamer")
-        self._frmCampos.pack(side=Tkinter.TOP)
-        self._lblDir = Tkinter.Label(self._frmCampos,text="Carpeta: ")
-        self._txtDir = Tkinter.Text(self._frmCampos, height=1, width=45)
-        self._btnDir = Tkinter.Button(self._frmCampos, text="...", command = self.selectDir)
-        self._lblJpg = Tkinter.Label(self._frmCampos,text="Imagen: ")
-        self._txtJpg = Tkinter.Text(self._frmCampos, height=1, width=45)
-        self._btnJpg = Tkinter.Button(self._frmCampos, text="...", command = self.selectJpg)
+        self._frmCampos.pack(side=tkinter.TOP)
+        self._lblDir = tkinter.Label(self._frmCampos,text="Carpeta: ")
+        self._txtDir = tkinter.Text(self._frmCampos, height=1, width=45)
+        self._btnDir = tkinter.Button(self._frmCampos, text="...", command = self.selectDir)
+        self._lblJpg = tkinter.Label(self._frmCampos,text="Imagen: ")
+        self._txtJpg = tkinter.Text(self._frmCampos, height=1, width=45)
+        self._btnJpg = tkinter.Button(self._frmCampos, text="...", command = self.selectJpg)
         self._lblDir.grid(column=0, row = 1)
         self._txtDir.grid(column=1, row = 1)
         self._btnDir.grid(column=2, row = 1)
@@ -38,12 +39,12 @@ class mainwindow:
         self._txtJpg.grid(column=1, row = 2)
         self._btnJpg.grid(column=2, row = 2)
         #Widgets botones
-        self._frmBotones = Tkinter.Frame(self._top)
-        self._frmBotones.pack(side=Tkinter.BOTTOM)
-        self._btnNormaliza = Tkinter.Button(self._frmBotones, text ="Normaliza", command = self.normaliza)
-        self._btnDesNormaliza = Tkinter.Button(self._frmBotones, text ="DesNormaliza", command = self.desNormaliza)
-        self._btnEnDirs = Tkinter.Button(self._frmBotones, text ="EnCarpetas", command = self.enCarpetas)
-        self._btnSalir = Tkinter.Button(self._frmBotones, text ="Salir", command = quit)
+        self._frmBotones = tkinter.Frame(self._top)
+        self._frmBotones.pack(side=tkinter.BOTTOM)
+        self._btnNormaliza = tkinter.Button(self._frmBotones, text ="Normaliza", command = self.normaliza)
+        self._btnDesNormaliza = tkinter.Button(self._frmBotones, text ="DesNormaliza", command = self.desNormaliza)
+        self._btnEnDirs = tkinter.Button(self._frmBotones, text ="EnCarpetas", command = self.enCarpetas)
+        self._btnSalir = tkinter.Button(self._frmBotones, text ="Salir", command = quit)
         self._btnNormaliza.grid(column=0, row = 1)
         self._btnDesNormaliza.grid(column=1, row = 1)
         self._btnSalir.grid(column=2, row = 1)
@@ -114,7 +115,7 @@ class mainwindow:
 
     def selectDir(self):
         #self._top.withdraw()
-        self._dirSelected = tkFileDialog.askdirectory()
+        self._dirSelected = filedialog.askdirectory()
         logging.debug("DIR: " + self._dirSelected)
         self._txtDir.focus_set()
         self._txtDir.delete(1.0, "end")
@@ -123,7 +124,7 @@ class mainwindow:
         self._jpgSelected = None
 
     def selectJpg(self):
-        self._jpgSelected = tkFileDialog.askopenfilename()
+        self._jpgSelected = filedialog.askopenfilename()
         logging.debug("JPG: " + self._jpgSelected)
         self._txtJpg.focus_set()
         self._txtJpg.delete(1.0, "end")
