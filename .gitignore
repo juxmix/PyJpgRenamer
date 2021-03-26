@@ -6,6 +6,7 @@ __pycache__/
 #Test Images
 *.jpg
 *.JPG
+images/
 
 # C extensions
 *.so
